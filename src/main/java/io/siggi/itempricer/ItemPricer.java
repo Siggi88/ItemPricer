@@ -19,6 +19,9 @@ public class ItemPricer extends JavaPlugin {
 	private ItemPricerConfiguration configuration = null;
 
 	public ItemDatabase getItemDatabase() {
+		if (!isEnabled()) {
+			throw new IllegalStateException("ItemPricer is not enabled!");
+		}
 		if (itemDatabase == null) {
 			itemDatabase = recipeSimplifier.generateDatabase();
 			configuration.sendPricesToDatabase(itemDatabase);
