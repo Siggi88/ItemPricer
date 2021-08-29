@@ -1,0 +1,19 @@
+main: io.siggi.itempricer.ItemPricer
+name: ItemPricer
+version: 1.0
+author: Siggi88
+api-version: 1.17
+softdepend: ["NBTTool"]
+commands:
+  reloaditempricer:
+    description: "Dump recipes"
+  dumprecipes:
+    description: "Dump recipes"
+  recipes:
+    description: "Get recipes for the current item"
+  getprice:
+    description: "Set the price of an item"
+  setprice:
+    description: "Get the price of an item"
+  dumpprices:
+    description: "Dump all calculated prices"
