@@ -6,14 +6,39 @@ api-version: 1.17
 softdepend: ["NBTTool"]
 commands:
   reloaditempricer:
-    description: "Dump recipes"
+    description: "Reload ItemPricer's configuration"
+    permission: itempricer.reload
   dumprecipes:
     description: "Dump recipes"
+    permission: itempricer.dumprecipes
   recipes:
     description: "Get recipes for the current item"
+    permission: itempricer.recipes
   getprice:
     description: "Set the price of an item"
+    permission: itempricer.setprice
   setprice:
     description: "Get the price of an item"
+    permission: itempricer.getprice
   dumpprices:
     description: "Dump all calculated prices"
+    permission: itempricer.dumpprices
+permissions:
+  itempricer.getprice:
+    description: "Get price information for an item"
+    default: op
+  itempricer.setprice:
+    description: "Set prices of items and set variables"
+    default: op
+  itempricer.recipes:
+    description: "Get list of known recipes for an item"
+    default: op
+  itempricer.dumpprices:
+    description: "Dump prices to a csv"
+    default: op
+  itempricer.dumprecipes:
+    description: "Dump all recipes to stdout (console) or to chat (player)"
+    default: false
+  itempricer.reload:
+    description: "Reload ItemPricer's configuration"
+    default: op
