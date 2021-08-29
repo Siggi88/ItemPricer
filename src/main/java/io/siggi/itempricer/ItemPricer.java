@@ -48,6 +48,13 @@ public class ItemPricer extends JavaPlugin {
 		loadConfiguration();
 	}
 
+	@Override
+	public void onDisable() {
+		recipeSimplifier = null;
+		configuration = null;
+		itemDatabase = null;
+	}
+
 	public static ItemPricer getInstance() {
 		return instance;
 	}
