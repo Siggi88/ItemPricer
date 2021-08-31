@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class InventoryManager implements Listener {
 	private final ItemPricer plugin;
@@ -23,9 +24,9 @@ public class InventoryManager implements Listener {
 		this.plugin = plugin;
 	}
 
-	public void openInventory(Player p, Inventory inventory, InventoryHandler handler) {
+	public void openInventory(Player p, Inventory inventory, Consumer<InventoryClickEvent> clickHandler, Consumer<InventoryCloseEvent> closeHandler) {
 		InventoryView view = p.openInventory(inventory);
-		handlers.put(view, handler);
+		handlers.put(view, new InventoryHandler(clickHandler, closeHandler));
 	}
 
 	@EventHandler
