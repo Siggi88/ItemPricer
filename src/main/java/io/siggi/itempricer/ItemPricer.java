@@ -59,6 +59,7 @@ public class ItemPricer extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+		inventoryManager.closeAll();
 		recipeSimplifier = null;
 		configuration = null;
 		itemDatabase = null;

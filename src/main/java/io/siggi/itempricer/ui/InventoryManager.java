@@ -9,7 +9,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InventoryManager implements Listener {
@@ -40,5 +42,13 @@ public class InventoryManager implements Listener {
 		InventoryHandler inventoryHandler = handlers.remove(view);
 		if (inventoryHandler != null)
 			inventoryHandler.close(event);
+	}
+
+	public void closeAll() {
+		List<InventoryView> views = new ArrayList<>();
+		views.addAll(handlers.keySet());
+		for (InventoryView view : views) {
+			view.close();
+		}
 	}
 }
