@@ -28,8 +28,8 @@ public class ItemPricerConfiguration {
 		gson = builder.create();
 	}
 
-	public Map<ItemStack, Amount> prices = new HashMap<>();
-	public Map<String, Amount> variables = new HashMap<>();
+	public final Map<ItemStack, Amount> prices = new HashMap<>();
+	public final Map<String, Amount> variables = new HashMap<>();
 
 	public double craftingAdd = 0.75;
 	public double craftingMultiply = 1;
