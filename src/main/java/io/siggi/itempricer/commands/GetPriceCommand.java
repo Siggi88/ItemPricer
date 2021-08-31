@@ -71,6 +71,7 @@ public class GetPriceCommand implements CommandExecutor, TabExecutor {
 			}
 			return true;
 		}
+		item = extractTrueItem(item);
 		ItemInfo itemInfo = plugin.getItemDatabase().getItemInfo(item);
 		if (itemInfo == null) {
 			sender.sendMessage(ChatColor.RED + "No info found for " + ChatColor.AQUA + ItemNamer.get().nameOf(item));

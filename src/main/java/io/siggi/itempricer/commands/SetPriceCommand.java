@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.siggi.itempricer.Util.materialList;
-import static io.siggi.itempricer.Util.tabComplete;
+import static io.siggi.itempricer.Util.*;
 
 public class SetPriceCommand implements CommandExecutor, TabExecutor {
 	private final ItemPricer plugin;
@@ -84,6 +83,7 @@ public class SetPriceCommand implements CommandExecutor, TabExecutor {
 				sender.sendMessage(ChatColor.GOLD + "Set variable " + ChatColor.AQUA + variable + ChatColor.GOLD + " to " + ChatColor.AQUA + price.toString() + ChatColor.GOLD + ".");
 			}
 		} else {
+			item = extractTrueItem(item);
 			plugin.getConfiguration().setItemPrice(item, price);
 			sender.sendMessage(ChatColor.GOLD + "Set price of " + ChatColor.AQUA + ItemNamer.get().nameOf(item) + ChatColor.GOLD + " to " + price.toColoredString() + ChatColor.GOLD + ".");
 		}
@@ -174,6 +174,7 @@ public class SetPriceCommand implements CommandExecutor, TabExecutor {
 						break;
 					}
 					ItemStack item = ((Player) sender).getInventory().getItem(index);
+					item = extractTrueItem(item);
 					amount.items.put(item, multiplier);
 				}
 				break;

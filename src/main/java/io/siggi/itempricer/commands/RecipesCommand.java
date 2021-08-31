@@ -16,8 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-import static io.siggi.itempricer.Util.materialList;
-import static io.siggi.itempricer.Util.tabComplete;
+import static io.siggi.itempricer.Util.*;
 
 public class RecipesCommand implements CommandExecutor, TabExecutor {
 	private ItemPricer plugin;
@@ -47,6 +46,7 @@ public class RecipesCommand implements CommandExecutor, TabExecutor {
 			printUsage(sender, label);
 			return true;
 		}
+		item = extractTrueItem(item);
 		RecipeBook.open(sender, item);
 		return true;
 	}
