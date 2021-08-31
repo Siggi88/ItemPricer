@@ -8,6 +8,7 @@ import io.siggi.itempricer.config.ItemPricerSerializedConfiguration;
 import io.siggi.itempricer.itemdatabase.ItemDatabase;
 import io.siggi.itempricer.itemdatabase.builder.RecipeSimplifier;
 import io.siggi.itempricer.ui.InventoryManager;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -71,6 +72,10 @@ public class ItemPricer extends JavaPlugin {
 
 	public static ItemPricer getInstance() {
 		return instance;
+	}
+
+	public static double getPrice(ItemStack item) {
+		return getInstance().getItemDatabase().getPrice(item);
 	}
 
 	public ItemPricerConfiguration getConfiguration() {
