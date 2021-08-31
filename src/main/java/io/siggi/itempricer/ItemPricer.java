@@ -47,6 +47,8 @@ public class ItemPricer extends JavaPlugin {
 		getCommand("getprice").setExecutor(new GetPriceCommand(this));
 		getCommand("setprice").setExecutor(new SetPriceCommand(this));
 		getCommand("dumpprices").setExecutor(new DumpPricesCommand(this));
+		getCommand("allunpriceditems").setExecutor(new AllUnpricedItemsCommand(this));
+		getCommand("itemsearch").setExecutor(new ItemSearchCommand(this));
 		recipeSimplifier = new RecipeSimplifier(this);
 		configuration = new ItemPricerConfiguration(this);
 		loadConfiguration();
