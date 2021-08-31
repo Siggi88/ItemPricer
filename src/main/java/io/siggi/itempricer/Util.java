@@ -11,8 +11,11 @@ import org.bukkit.inventory.RecipeChoice;
 import java.util.*;
 import java.util.function.Predicate;
 
+import static io.siggi.itempricer.config.ConfigSerialization.itemStackGson;
+
 public class Util {
 	private static String minecraftVersion = null;
+
 	public static String getMinecraftVersion() {
 		if (minecraftVersion == null) {
 			String bukkitVer = Bukkit.getServer().getVersion();
@@ -144,5 +147,35 @@ public class Util {
 			}
 		}
 		return materials;
+	}
+
+	public static ItemStack encapsulateTrueItem(ItemStack item) {
+		String json = itemStackGson.toJson(item, ItemStack.class);
+		NBTCompound tag = NBTTool.getUtil().getTag(item);
+		if (tag == null)
+			tag = NBTTool.getUtil().newCompound();
+		String currentValue = tag.getString("ItemPricer-TrueItem");
+		if (currentValue != null && !currentValue.isEmpty()) {
+			return item;
+		}
+		tag.setString("ItemPricer-TrueItem", json);
+		item = NBTTool.getUtil().setTag(item, tag);
+		return item;
+	}
+
+	public static ItemStack extractTrueItem(ItemStack item) {
+		NBTCompound tag = NBTTool.getUtil().getTag(item);
+		if (tag == null)
+			return item;
+		String trueItemJson = tag.getString("ItemPricer-TrueItem");
+		if (trueItemJson == null || trueItemJson.isEmpty()) {
+			return item;
+		}
+		try {
+			ItemStack result = itemStackGson.fromJson(trueItemJson, ItemStack.class);
+			if (result != null) return result;
+		} catch (Exception e) {
+		}
+		return item;
 	}
 }
