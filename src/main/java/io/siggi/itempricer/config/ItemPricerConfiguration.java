@@ -7,6 +7,7 @@ import hk.siggi.bukkit.nbt.NBTTool;
 import hk.siggi.bukkit.nbt.NBTUtil;
 import io.siggi.itempricer.ItemPricer;
 import io.siggi.itempricer.itemdatabase.ItemDatabase;
+import io.siggi.itempricer.itemdatabase.ItemInfo;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.BufferedReader;
@@ -62,6 +63,11 @@ public class ItemPricerConfiguration {
 	}
 
 	public void sendPricesToDatabase(ItemDatabase itemDatabase) {
+		// delete all admin prices first
+		for (ItemInfo info : itemDatabase.getItemInfos()) {
+			info.setAdminPrice(null);
+		}
+		// then send new prices
 		for (Map.Entry<ItemStack, Amount> priceEntry : prices.entrySet()) {
 			itemDatabase.setAdminPrice(priceEntry.getKey(), priceEntry.getValue());
 		}
