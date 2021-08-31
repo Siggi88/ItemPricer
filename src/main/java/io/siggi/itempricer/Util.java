@@ -4,6 +4,7 @@ import hk.siggi.bukkit.nbt.NBTCompound;
 import hk.siggi.bukkit.nbt.NBTTool;
 import io.siggi.itempricer.itemnamer.ItemNamer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
@@ -177,5 +178,21 @@ public class Util {
 		} catch (Exception e) {
 		}
 		return item;
+	}
+
+	public static String doubleToPriceString(double value) {
+		String s = Double.toString(value);
+		int dotPos = s.indexOf(".");
+		if (dotPos == -1) {
+			return s + ".00";
+		}
+		int cutOff = dotPos + 3;
+		if (s.length() <= cutOff) {
+			while (s.length() < cutOff) {
+				s += "0";
+			}
+			return s;
+		}
+		return s.substring(0, cutOff) + ChatColor.DARK_GRAY + s.substring(cutOff);
 	}
 }
