@@ -13,8 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ItemPricerConfiguration {
 
@@ -30,6 +29,7 @@ public class ItemPricerConfiguration {
 
 	public final Map<ItemStack, Amount> prices = new HashMap<>();
 	public final Map<String, Amount> variables = new HashMap<>();
+	public final Set<ItemStack> ignoredItems = new HashSet<>();
 
 	public double craftingAdd = 0.75;
 	public double craftingMultiply = 1;

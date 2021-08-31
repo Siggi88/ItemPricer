@@ -30,6 +30,7 @@ public class ItemPricerSerializedConfiguration {
 	public double miningMultiply = 0.95;
 	public final Map<String, ConfigAmount> prices = new LinkedHashMap<>();
 	public final Map<String, ConfigAmount> variables = new LinkedHashMap<>();
+	public final List<String> ignoredItems = new ArrayList<>();
 	public final Map<String, String> itemStackMapping = new LinkedHashMap<>();
 	public final transient Map<ItemStack, String> itemStackSerializationMapping = new HashMap<>();
 
@@ -54,6 +55,10 @@ public class ItemPricerSerializedConfiguration {
 		configuration.variables.clear();
 		for (Map.Entry<String, ConfigAmount> entry : variables.entrySet()) {
 			configuration.variables.put(entry.getKey(), entry.getValue().toAmount(this));
+		}
+		configuration.ignoredItems.clear();
+		for (String item : ignoredItems) {
+			configuration.ignoredItems.add(unmapItemStack(item));
 		}
 	}
 
@@ -81,9 +86,14 @@ public class ItemPricerSerializedConfiguration {
 		for (Map.Entry<String, Amount> entry : configuration.variables.entrySet()) {
 			variables.put(entry.getKey(), new ConfigAmount(entry.getValue(), this));
 		}
+		ignoredItems.clear();
+		for (ItemStack item : configuration.ignoredItems) {
+			ignoredItems.add(mapItemStack(item));
+		}
 
 		sort(prices);
 		sort(variables);
+		sort(ignoredItems);
 		sort(itemStackMapping);
 	}
 
@@ -140,5 +150,9 @@ public class ItemPricerSerializedConfiguration {
 		for (String key : sortedSet) {
 			map.put(key, tempSpace.get(key));
 		}
+	}
+
+	private void sort(List<String> list) {
+		list.sort((s1, s2) -> s1.compareTo(s2));
 	}
 }
