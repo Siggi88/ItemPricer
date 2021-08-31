@@ -3,6 +3,8 @@ package io.siggi.itempricer.commands;
 import io.siggi.itempricer.ItemPricer;
 import io.siggi.itempricer.itemdatabase.ItemInfo;
 import io.siggi.itempricer.itemdatabase.SimplifiedRecipe;
+import io.siggi.itempricer.itemnamer.ItemNamer;
+import io.siggi.itempricer.ui.RecipeBook;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -45,23 +47,7 @@ public class RecipesCommand implements CommandExecutor, TabExecutor {
 			printUsage(sender, label);
 			return true;
 		}
-		ItemInfo itemInfo = plugin.getItemDatabase().getItemInfo(item);
-		Set<SimplifiedRecipe> recipes;
-		if (itemInfo == null || (recipes = itemInfo.getRecipes()).isEmpty()) {
-			sender.sendMessage(ChatColor.RED + "No recipes found for this item.");
-			return true;
-		}
-		for (SimplifiedRecipe recipe : recipes) {
-			String recipeString = recipe.toString();
-			int colonPos = recipeString.indexOf(":");
-			recipeString = ChatColor.GOLD + recipeString.substring(0, colonPos + 1)
-					+ ChatColor.AQUA + recipeString.substring(colonPos + 1)
-					.replace(",", ChatColor.GOLD + "," + ChatColor.AQUA)
-					.replace(" makes ", ChatColor.GOLD + " makes " + ChatColor.AQUA)
-					.replace("{", ChatColor.GOLD + "{" + ChatColor.AQUA)
-					.replace("}", ChatColor.GOLD + "}" + ChatColor.AQUA);
-			sender.sendMessage(recipeString);
-		}
+		RecipeBook.open(sender, item);
 		return true;
 	}
 
