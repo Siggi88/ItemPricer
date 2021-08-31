@@ -26,6 +26,9 @@ commands:
   allunpriceditems:
     description: "Get all items with no price"
     permission: itempricer.setprice
+  allignoreditems:
+    description: "Get all items that got ignored"
+    permission: itempricer.setprice
   itemsearch:
     description: "Search for items"
     permission: itempricer.setprice
