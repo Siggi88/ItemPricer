@@ -6,6 +6,7 @@ import io.siggi.itempricer.itemnamer.ItemNamer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.ShapedRecipe;
 
 import java.util.HashMap;
 import java.util.List;
@@ -78,8 +79,13 @@ public class SimplifiedRecipe {
 	private final Map<RecipeChoice, Integer> inputs;
 	private final ItemStack output;
 	private final RecipeType type;
+	private final ShapedRecipe shapedRecipe;
 
 	public SimplifiedRecipe(List<RecipeChoice> inputs, ItemStack output, RecipeType type) {
+		this(inputs, output, type, null);
+	}
+
+	public SimplifiedRecipe(List<RecipeChoice> inputs, ItemStack output, RecipeType type, ShapedRecipe shapedRecipe) {
 		if (inputs == null || output == null || type == null) {
 			throw new NullPointerException("no arguments allowed to be null when constructing SimplifiedRecipe");
 		}
@@ -93,6 +99,7 @@ public class SimplifiedRecipe {
 		}
 		this.output = output;
 		this.type = type;
+		this.shapedRecipe = shapedRecipe;
 	}
 
 	public Map<RecipeChoice, Integer> getInputs() {
@@ -105,6 +112,10 @@ public class SimplifiedRecipe {
 
 	public RecipeType getType() {
 		return type;
+	}
+
+	public ShapedRecipe getShapedRecipe() {
+		return shapedRecipe;
 	}
 
 	private String recipeString = null;

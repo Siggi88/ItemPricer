@@ -134,7 +134,8 @@ public class RecipeSimplifier {
 				new SimplifiedRecipe(
 						choices,
 						recipe.getResult(),
-						SimplifiedRecipe.RecipeType.CRAFTING
+						SimplifiedRecipe.RecipeType.CRAFTING,
+						recipe
 				)
 		);
 	}
