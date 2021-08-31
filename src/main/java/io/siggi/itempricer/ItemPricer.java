@@ -2,6 +2,7 @@ package io.siggi.itempricer;
 
 import io.siggi.itempricer.commands.*;
 import io.siggi.itempricer.config.ConfigSerialization;
+import io.siggi.itempricer.config.DataCache;
 import io.siggi.itempricer.config.ItemPricerConfiguration;
 import io.siggi.itempricer.config.ItemPricerSerializedConfiguration;
 import io.siggi.itempricer.itemdatabase.ItemDatabase;
@@ -17,6 +18,7 @@ public class ItemPricer extends JavaPlugin {
 	private ItemDatabase itemDatabase = null;
 	private RecipeSimplifier recipeSimplifier = null;
 	private ItemPricerConfiguration configuration = null;
+	private DataCache dataCache = null;
 
 	public ItemDatabase getItemDatabase() {
 		if (!isEnabled()) {
@@ -46,6 +48,9 @@ public class ItemPricer extends JavaPlugin {
 		recipeSimplifier = new RecipeSimplifier(this);
 		configuration = new ItemPricerConfiguration(this);
 		loadConfiguration();
+		if (!loadCache() || !dataCache.isValid()) {
+			dataCache = new DataCache();
+		}
 	}
 
 	@Override
@@ -53,6 +58,7 @@ public class ItemPricer extends JavaPlugin {
 		recipeSimplifier = null;
 		configuration = null;
 		itemDatabase = null;
+		dataCache = null;
 	}
 
 	public static ItemPricer getInstance() {
@@ -61,6 +67,10 @@ public class ItemPricer extends JavaPlugin {
 
 	public ItemPricerConfiguration getConfiguration() {
 		return configuration;
+	}
+
+	public DataCache getDataCache() {
+		return dataCache;
 	}
 
 	public void loadConfiguration() {
@@ -89,6 +99,36 @@ public class ItemPricer extends JavaPlugin {
 				ConfigSerialization.gson.toJson(serializedConfig, ItemPricerSerializedConfiguration.class, writer);
 			}
 			tmpSaveFile.renameTo(configFile);
+		} catch (Exception e) {
+		}
+	}
+
+	public boolean loadCache() {
+		try {
+			File df = getDataFolder();
+			File cacheFile = new File(df, "cache.json");
+			if (cacheFile.exists()) {
+				try (FileReader reader = new FileReader(cacheFile)) {
+					dataCache = ConfigSerialization.gson.fromJson(reader, DataCache.class);
+				}
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public void saveCache() {
+		try {
+			File df = getDataFolder();
+			if (!df.exists()) df.mkdirs();
+			File cacheFile = new File(df, "cache.json");
+			File tmpSaveFile = new File(df, "cache.json.sav");
+			try (FileWriter writer = new FileWriter(tmpSaveFile)) {
+				ConfigSerialization.gson.toJson(dataCache, DataCache.class, writer);
+			}
+			tmpSaveFile.renameTo(cacheFile);
 		} catch (Exception e) {
 		}
 	}

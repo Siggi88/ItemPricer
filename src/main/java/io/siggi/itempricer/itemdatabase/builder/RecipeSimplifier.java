@@ -78,25 +78,29 @@ public class RecipeSimplifier {
 	private Map<Material,ItemStack> getBlockDrops() {
 		if (blockDrops == null) {
 			Map<Material,ItemStack> bd = new HashMap<>();
-			Block testBlock = findTestBlock();
-			try {
-				for (Material material : Material.values()) {
-					if (!material.isItem()) continue;
-					try {
-						testBlock.setType(material, false);
-					} catch (IllegalArgumentException iae) {
-						// it's not a block
-						continue;
+			if (!plugin.getDataCache().restoreBlockDrops(bd)) {
+				Block testBlock = findTestBlock();
+				try {
+					for (Material material : Material.values()) {
+						if (!material.isItem()) continue;
+						try {
+							testBlock.setType(material, false);
+						} catch (IllegalArgumentException iae) {
+							// it's not a block
+							continue;
+						}
+						Collection<ItemStack> drops = testBlock.getDrops();
+						if (drops.size() != 1) continue;
+						ItemStack drop = drops.iterator().next();
+						Material dropType = drop.getType();
+						if (dropType == material || dropType == Material.AIR) continue;
+						bd.put(material, drop);
 					}
-					Collection<ItemStack> drops = testBlock.getDrops();
-					if (drops.size() != 1) continue;
-					ItemStack drop = drops.iterator().next();
-					Material dropType = drop.getType();
-					if (dropType == material || dropType == Material.AIR) continue;
-					bd.put(material, drop);
+				} finally {
+					testBlock.setType(Material.AIR);
 				}
-			} finally {
-				testBlock.setType(Material.AIR);
+				plugin.getDataCache().cacheBlockDrops(bd);
+				plugin.saveCache();
 			}
 			blockDrops = Collections.unmodifiableMap(bd);
 		}

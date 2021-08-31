@@ -3,6 +3,7 @@ package io.siggi.itempricer;
 import hk.siggi.bukkit.nbt.NBTCompound;
 import hk.siggi.bukkit.nbt.NBTTool;
 import io.siggi.itempricer.itemnamer.ItemNamer;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
@@ -11,6 +12,22 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class Util {
+	private static String minecraftVersion = null;
+	public static String getMinecraftVersion() {
+		if (minecraftVersion == null) {
+			String bukkitVer = Bukkit.getServer().getVersion();
+			int index = bukkitVer.indexOf("(MC: ");
+			if (index > 0) {
+				minecraftVersion = bukkitVer.substring(index + 5);
+				index = minecraftVersion.indexOf(")");
+				if (index > 0) minecraftVersion = minecraftVersion.substring(0, index);
+			} else {
+				minecraftVersion = null;
+			}
+		}
+		return minecraftVersion;
+	}
+
 	public static <T> Iterable<T> iterable(Iterator<T> iterator) {
 		return new Iterable<T>() {
 			public Iterator<T> iterator() {
