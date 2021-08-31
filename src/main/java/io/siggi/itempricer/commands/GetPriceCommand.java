@@ -17,8 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.siggi.itempricer.Util.materialList;
-import static io.siggi.itempricer.Util.tabComplete;
+import static io.siggi.itempricer.Util.*;
 
 public class GetPriceCommand implements CommandExecutor, TabExecutor {
 	private final ItemPricer plugin;
@@ -80,16 +79,20 @@ public class GetPriceCommand implements CommandExecutor, TabExecutor {
 		sender.sendMessage(ChatColor.GOLD + "Item: " + ChatColor.AQUA + ItemNamer.get().nameOf(item));
 		Amount adminPrice = itemInfo.getAdminPrice();
 		if (adminPrice != null) {
-			String adminPriceString = adminPrice.toColoredString();
-			sender.sendMessage(ChatColor.GOLD + "Admin Price: " + adminPriceString);
-			if (!adminPrice.isPure()) {
-				sender.sendMessage(ChatColor.GOLD + "Evaluated Admin Price: " + ChatColor.AQUA + adminPrice.get());
+			if (adminPrice.isPure()) {
+				sender.sendMessage(ChatColor.GOLD + "Admin Price: " + ChatColor.AQUA + doubleToPriceString(adminPrice.get()));
+			} else {
+				String adminPriceString = adminPrice.toColoredString();
+				sender.sendMessage(ChatColor.GOLD + "Admin Price: " + adminPriceString);
+				Double adminPriceEvaluated = adminPrice.get();
+				if (adminPriceEvaluated != null)
+					sender.sendMessage(ChatColor.GOLD + "Evaluated Admin Price: " + ChatColor.AQUA + doubleToPriceString(adminPriceEvaluated));
 			}
 		}
 		if (itemInfo.hasCalculatedPrice()) {
-			sender.sendMessage(ChatColor.GOLD + "Price: " + ChatColor.AQUA + itemInfo.getPrice());
+			sender.sendMessage(ChatColor.GOLD + "Price: " + ChatColor.AQUA + doubleToPriceString(itemInfo.getPrice()));
 		} else {
-			sender.sendMessage(ChatColor.GOLD + "Price: " + ChatColor.AQUA + "not set");
+			sender.sendMessage(ChatColor.GOLD + "Price: " + ChatColor.RED + "not set");
 		}
 		return true;
 	}
