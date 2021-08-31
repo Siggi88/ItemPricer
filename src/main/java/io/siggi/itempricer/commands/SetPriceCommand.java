@@ -79,13 +79,22 @@ public class SetPriceCommand implements CommandExecutor, TabExecutor {
 			} else if (isNumericChar(variable.charAt(0))) {
 				sender.sendMessage(ChatColor.RED + "Variable names cannot start with a number!");
 			} else {
-				plugin.getConfiguration().variables.put(variable, price);
-				sender.sendMessage(ChatColor.GOLD + "Set variable " + ChatColor.AQUA + variable + ChatColor.GOLD + " to " + ChatColor.AQUA + price.toString() + ChatColor.GOLD + ".");
+				if (price == null) {
+					plugin.getConfiguration().variables.remove(variable);
+					sender.sendMessage(ChatColor.GOLD + "Deleted variable " + ChatColor.AQUA + variable + ChatColor.GOLD + ".");
+				} else {
+					plugin.getConfiguration().variables.put(variable, price);
+					sender.sendMessage(ChatColor.GOLD + "Set variable " + ChatColor.AQUA + variable + ChatColor.GOLD + " to " + ChatColor.AQUA + price.toString() + ChatColor.GOLD + ".");
+				}
 			}
 		} else {
 			item = extractTrueItem(item);
 			plugin.getConfiguration().setItemPrice(item, price);
-			sender.sendMessage(ChatColor.GOLD + "Set price of " + ChatColor.AQUA + ItemNamer.get().nameOf(item) + ChatColor.GOLD + " to " + price.toColoredString() + ChatColor.GOLD + ".");
+			if (price == null) {
+				sender.sendMessage(ChatColor.GOLD + "Removed admin price of " + ChatColor.AQUA + ItemNamer.get().nameOf(item) + ChatColor.GOLD + ".");
+			} else {
+				sender.sendMessage(ChatColor.GOLD + "Set price of " + ChatColor.AQUA + ItemNamer.get().nameOf(item) + ChatColor.GOLD + " to " + price.toColoredString() + ChatColor.GOLD + ".");
+			}
 		}
 		plugin.getConfiguration().sendPricesToDatabase(plugin.getItemDatabase());
 		plugin.saveConfiguration();
@@ -183,6 +192,9 @@ public class SetPriceCommand implements CommandExecutor, TabExecutor {
 				}
 				break;
 			}
+		}
+		if (amount.isPure() && amount.base == 0.0) {
+			return null;
 		}
 		return amount;
 	}
