@@ -7,6 +7,7 @@ import io.siggi.itempricer.config.ItemPricerConfiguration;
 import io.siggi.itempricer.config.ItemPricerSerializedConfiguration;
 import io.siggi.itempricer.itemdatabase.ItemDatabase;
 import io.siggi.itempricer.itemdatabase.builder.RecipeSimplifier;
+import io.siggi.itempricer.ui.InventoryManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -19,6 +20,7 @@ public class ItemPricer extends JavaPlugin {
 	private RecipeSimplifier recipeSimplifier = null;
 	private ItemPricerConfiguration configuration = null;
 	private DataCache dataCache = null;
+	private InventoryManager inventoryManager = null;
 
 	public ItemDatabase getItemDatabase() {
 		if (!isEnabled()) {
@@ -51,6 +53,8 @@ public class ItemPricer extends JavaPlugin {
 		if (!loadCache() || !dataCache.isValid()) {
 			dataCache = new DataCache();
 		}
+		inventoryManager = new InventoryManager(this);
+		getServer().getPluginManager().registerEvents(inventoryManager, this);
 	}
 
 	@Override
@@ -59,6 +63,7 @@ public class ItemPricer extends JavaPlugin {
 		configuration = null;
 		itemDatabase = null;
 		dataCache = null;
+		inventoryManager = null;
 	}
 
 	public static ItemPricer getInstance() {
@@ -71,6 +76,10 @@ public class ItemPricer extends JavaPlugin {
 
 	public DataCache getDataCache() {
 		return dataCache;
+	}
+
+	public InventoryManager getInventoryManager() {
+		return inventoryManager;
 	}
 
 	public void loadConfiguration() {
