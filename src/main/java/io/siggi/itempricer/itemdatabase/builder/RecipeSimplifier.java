@@ -71,6 +71,14 @@ public class RecipeSimplifier {
 		for (ItemStack item : toCreate) {
 			itemDb.getOrCreateItemInfo(item);
 		}
+		for (Material material : Material.values()) {
+			if (material.isItem()) {
+				ItemStack item = new ItemStack(material);
+				if (item.getItemMeta() == null)
+					continue;
+				itemDb.getOrCreateItemInfo(item);
+			}
+		}
 		return itemDb;
 	}
 
