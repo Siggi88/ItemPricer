@@ -2,18 +2,12 @@ package io.siggi.itempricer.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import hk.siggi.bukkit.nbt.NBTCompound;
 import hk.siggi.bukkit.nbt.NBTTool;
-import hk.siggi.bukkit.nbt.NBTUtil;
 import io.siggi.itempricer.ItemPricer;
 import io.siggi.itempricer.itemdatabase.ItemDatabase;
 import io.siggi.itempricer.itemdatabase.ItemInfo;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.*;
 
 public class ItemPricerConfiguration {
@@ -49,6 +43,15 @@ public class ItemPricerConfiguration {
 
 	public double miningAdd = 0.0;
 	public double miningMultiply = 0.95;
+
+	public double waterAdd = 1;
+	public double waterMultiply = 1;
+
+	public double boneMealAdd = 0.0;
+	public double boneMealMultiply = 0.8;
+
+	public double boneMealDuplicateAdd = 0.0;
+	public double boneMealDuplicateMultiply = 0.5;
 
 	public void setItemPrice(ItemStack item, Amount price) {
 		if (price == null) {

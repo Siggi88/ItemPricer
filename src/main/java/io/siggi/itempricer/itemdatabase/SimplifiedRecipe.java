@@ -1,7 +1,6 @@
 package io.siggi.itempricer.itemdatabase;
 
 import io.siggi.itempricer.ItemPricer;
-import io.siggi.itempricer.Util;
 import io.siggi.itempricer.itemnamer.ItemNamer;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -59,6 +58,27 @@ public class SimplifiedRecipe {
 				6,
 				() -> ItemPricer.getInstance().getConfiguration().miningAdd,
 				() -> ItemPricer.getInstance().getConfiguration().miningMultiply
+		),
+		WATERING(
+				"Water",
+				"Watering",
+				7,
+				() -> ItemPricer.getInstance().getConfiguration().waterAdd,
+				() -> ItemPricer.getInstance().getConfiguration().waterMultiply
+		),
+		BONE_MEAL(
+				"Bone Meal",
+				"Bone Mealing",
+				8,
+				() -> ItemPricer.getInstance().getConfiguration().boneMealAdd,
+				() -> ItemPricer.getInstance().getConfiguration().boneMealMultiply
+		),
+		BONE_MEAL_DUPLICATING(
+				"Bone Meal Duplicate",
+				"Bone Meal Duplicating",
+				9,
+				() -> ItemPricer.getInstance().getConfiguration().boneMealDuplicateAdd,
+				() -> ItemPricer.getInstance().getConfiguration().boneMealDuplicateMultiply
 		);
 
 		public final String verb;

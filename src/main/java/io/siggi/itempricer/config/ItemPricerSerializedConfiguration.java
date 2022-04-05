@@ -28,6 +28,12 @@ public class ItemPricerSerializedConfiguration {
 	public double brewingMultiply = 1;
 	public double miningAdd = 0.0;
 	public double miningMultiply = 0.95;
+	public double waterAdd = 1;
+	public double waterMultiply = 1;
+	public double boneMealAdd = 0.0;
+	public double boneMealMultiply = 0.8;
+	public double boneMealDuplicateAdd = 0.0;
+	public double boneMealDuplicateMultiply = 0.5;
 	public final Map<String, ConfigAmount> prices = new LinkedHashMap<>();
 	public final Map<String, ConfigAmount> variables = new LinkedHashMap<>();
 	public final List<String> ignoredItems = new ArrayList<>();
@@ -47,6 +53,12 @@ public class ItemPricerSerializedConfiguration {
 		configuration.brewingMultiply = brewingMultiply;
 		configuration.miningAdd = miningAdd;
 		configuration.miningMultiply = miningMultiply;
+		configuration.waterAdd = waterAdd;
+		configuration.waterMultiply = waterMultiply;
+		configuration.boneMealAdd = boneMealAdd;
+		configuration.boneMealMultiply = boneMealMultiply;
+		configuration.boneMealDuplicateAdd = boneMealDuplicateAdd;
+		configuration.boneMealDuplicateMultiply = boneMealDuplicateMultiply;
 
 		configuration.prices.clear();
 		for (Map.Entry<String, ConfigAmount> entry : prices.entrySet()) {
@@ -75,6 +87,12 @@ public class ItemPricerSerializedConfiguration {
 		brewingMultiply = configuration.brewingMultiply;
 		miningAdd = configuration.miningAdd;
 		miningMultiply = configuration.miningMultiply;
+		waterAdd =configuration. waterAdd;
+		waterMultiply = configuration.waterMultiply;
+		boneMealAdd = configuration.boneMealAdd;
+		boneMealMultiply = configuration.boneMealMultiply;
+		boneMealDuplicateAdd = configuration.boneMealDuplicateAdd;
+		boneMealDuplicateMultiply = configuration.boneMealDuplicateMultiply;
 
 		itemStackMapping.clear();
 

@@ -58,6 +58,7 @@ public class RecipeSimplifier {
 			);
 		}
 		BrewingRecipes.addTo(itemDb);
+		OtherRecipes.addTo(itemDb);
 		List<ItemStack> toCreate = new LinkedList<>();
 		for (ItemInfo info : itemDb.getItemInfos()) {
 			for (SimplifiedRecipe recipe : info.getRecipes()) {
